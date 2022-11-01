@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    # trigger on version tag push
+    tags:
+      - "v*"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+      
+      - name: "Metadata: Git"
+        id: git-meta
+        run:
+          export TRUNCATED_GITHUB_SHA=$(echo ${{ github.sha }} | cut -c1-7);
+          export VERSION=${GITHUB_REF/refs\/tags\//};
+          echo "::set-output name=minisha::${TRUNCATED_GITHUB_SHA}";
+          echo "::set-output name=version::${VERSION}";
+          echo "::set-output name=versionlabel::${VERSION}+${TRUNCATED_GITHUB_SHA}"
+      
+      - name: "Print Metadata: Git"
+        run: |
+          echo "minisha: ${{ steps.git-meta.outputs.minisha }}"
+          echo "version: ${{ steps.git-meta.outputs.version }}"
+          echo "versionlabel: ${{ steps.git-meta.outputs.versionlabel }}"
