@@ -22,9 +22,9 @@ jobs:
         run:
           export TRUNCATED_GITHUB_SHA=$(echo ${{ github.sha }} | cut -c1-7);
           export VERSION=${GITHUB_REF/refs\/tags\//};
-          echo "::set-output name=minisha::${TRUNCATED_GITHUB_SHA}";
-          echo "::set-output name=version::${VERSION}";
-          echo "::set-output name=versionlabel::${VERSION}+${TRUNCATED_GITHUB_SHA}"
+          echo "minisha=${TRUNCATED_GITHUB_SHA}" >> $GITHUB_OUTPUT;
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT;
+          echo "versionlabel=${VERSION}+${TRUNCATED_GITHUB_SHA}" >> $GITHUB_OUTPUT;
       
       - name: "Print Metadata: Git"
         run: echo ${{ steps.git-meta.outputs.minisha }}
