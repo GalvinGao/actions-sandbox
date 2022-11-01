@@ -27,7 +27,4 @@ jobs:
           echo "::set-output name=versionlabel::${VERSION}+${TRUNCATED_GITHUB_SHA}"
       
       - name: "Print Metadata: Git"
-        run: |
-          echo "minisha: ${{ steps.git-meta.outputs.minisha }}"
-          echo "version: ${{ steps.git-meta.outputs.version }}"
-          echo "versionlabel: ${{ steps.git-meta.outputs.versionlabel }}"
+        run: echo ${{ steps.git-meta.outputs.minisha }}
