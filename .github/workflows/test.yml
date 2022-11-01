@@ -28,3 +28,11 @@ jobs:
       
       - name: "Print Metadata: Git"
         run: echo ${{ steps.git-meta.outputs.minisha }}
+    
+      - name: "Docker: Build and Push Image"
+        id: ghcr-docker
+        uses: 'penguin-statistics/actions/ghcr-docker@main'
+        with:
+          version: ${{ steps.git-meta.outputs.version }}
+          repository: 'penguin-statistics/frontend-v2'
+          build-args: TRUNCATED_GITHUB_SHA=${{ steps.git-meta.outputs.minisha }}
