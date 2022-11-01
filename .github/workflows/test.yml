@@ -2,9 +2,9 @@ name: Test
 
 on:
   push:
-    # trigger on version tag push
-    tags:
-      - "v*"
+    # trigger on main branch
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.ref }}
